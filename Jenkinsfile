@@ -3,7 +3,7 @@ pipeline {
 
     
     environment {
-        AWS_CREDENTIALS = credentials('packer')
+        AWS_CREDENTIALS = credentials('packer-install')
     }
 
     stages {
