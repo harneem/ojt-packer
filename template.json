@@ -22,7 +22,7 @@
       },
       "vpc_id": "vpc-08842a1c7446735d9",
       "subnet_id": "subnet-023d1deb18748876d",
-      "security_id": "sg-03ff83a4aebedb2d0",
+      "security_group_id": "sg-03ff83a4aebedb2d0",
       "instance_type": "t2.micro",
       "ssh_username": "{{user `ssh_username`}}",
       "ami_name": "packer-example {{timestamp}}",
