@@ -31,21 +31,23 @@ pipeline {
         }
 
         stage('packer build') {
-            steps {
-                script {
-                    sh 'packer build -var-file=vars.json template.json'
+    steps {
+        script {
+            sh 'packer build -var-file=vars.json template.json'
+            
+            // Read the manifest.json file and extract the AMI ID
+            def manifest = readJSON file: 'manifest.json'
+            def latestAmiId = manifest.builds[0].artifact_id.split(':').last().replaceAll('"', '').trim()
 
-                    // Fetch the latest AMI ID from the Packer manifest
-                    def latestAmiId = sh(script: 'cat manifest.json | jq -r \'.builds[0].artifact_id\' | awk -F\':\' \'{print $NF}\' | tr -d \'"\'', returnStdout: true).trim()
+            // Store the AMI ID as an environment variable
+            env.LATEST_AMI_ID = latestAmiId
 
-                    // Store the AMI ID as an environment variable
-                    env.LATEST_AMI_ID = latestAmiId
-
-                    // Print the latest AMI ID for logging purposes
-                    echo "Latest AMI ID: $latestAmiId"
-                }
-            }
+            // Print the latest AMI ID for logging purposes
+            echo "Latest AMI ID: $latestAmiId"
         }
+    }
+}
+
 
         // Add more stages as needed
     }
