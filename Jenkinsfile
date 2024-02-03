@@ -10,7 +10,7 @@ pipeline {
 
         stage('Checkout Source') {
             steps {
-                git branch: "main",
+                git branch: "master",
                 url: 'https://github.com/harneem/ojt-packer.git'
             }
         }
